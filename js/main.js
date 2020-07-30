@@ -14,8 +14,8 @@ $(function () {
     $('.reviews__slider--body').slick({
         slidesToShow: 3,
         infinite: true,
-        prevArrow: '<button type="button" class="slick-prev reviews__slider--btn"></button>',
-        nextArrow: '<button type="button" class="slick-next reviews__slider--btn"></button>',
+        prevArrow: '<button type="button" class="slick-prev reviews__slider--btn" style="background-image: url(img/slider/arrow.svg)"></button>',
+        nextArrow: '<button type="button" class="slick-next reviews__slider--btn" style="background-image: url(img/slider/arrow.svg)"></button>',
         adaptiveHeight: true,
         appendArrows: '.reviews__slider--buttons',
         responsive: [
