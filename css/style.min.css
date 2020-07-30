@@ -2714,7 +2714,7 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   position: absolute;
   width: 50px;
   height: 50px;
-  background: url(/img/slider/arrow.svg) center center/contain no-repeat;
+  background: center center / contain no-repeat;
 }
 
 .reviews__slider--btn.slick-disabled {
