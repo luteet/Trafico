@@ -52,10 +52,15 @@ $(function () {
         });
     });
 
+
+
     let hMenu = $('.header__menu'),
         logo = $('.header-logo'),
+        scrollName, scrollElem, scrollTop,
+        start_scroll = false,
+        widthScrollBar, widthScreen,
         burger = $('.menu__burger'),
-        about_elem__pants = $('.man-pants'),
+        mBtn = $('.menu__btn-scroll'),
         faq_hidenElem = $('.faq__list--li-hiden'),
         faq_hidenElemLength = $('.faq__list--li-hiden').length,
         faq_question = $('.faq__list--question'),
@@ -64,6 +69,15 @@ $(function () {
         faq_column = $('.faq__list--column'),
         faq_loadMore = $('.faq__list--load-more'),
         mList = $('.header__menu--list');
+
+    function widthScrollBarFunc() {
+        widthScrollBar = $('.body').width();
+        $('.body').css('overflow', 'hidden');
+        widthScrollBar = $('.body').width() - widthScrollBar;
+        $('.body').css('overflow', 'visible');
+    }
+
+    widthScrollBarFunc();
 
     function screenSize() {
         if ($(window).width() <= 951) {
@@ -84,17 +98,51 @@ $(function () {
     headerHider({
         elemName: $('.header__top'),
         classCheck: 'hide',
-        distanceHide: 500,
-        distanceShow: 200
+        distanceHide: 400,
+        distanceShow: 100
     })
 
 
     $(burger).on('click', function () {
         $(this).toggleClass('active');
         $(mList).toggleClass('active');
-        $(hMenu).toggleClass('active');
-        $('.body').toggleClass('scroll_none');
+        $('body').toggleClass('scroll_none');
     });
+
+
+    // scroll to section ===============================
+    $(mBtn).on('click', function (e) {
+        e.preventDefault();
+        if (start_scroll == false) {
+            start_scroll = true;
+
+            scrollName = $(this).attr('href'),
+            scrollElem = $(scrollName),
+            scrollTop = scrollElem.offset().top;
+
+            if($(window).width() <= 950) {
+                scrollTop = scrollTop - 70;
+            }
+
+            if ($(burger).hasClass('active')) {
+                $('body').removeClass('scroll_none');
+                $(burger).removeClass('active');
+                $(mList).removeClass('active');
+            }
+
+
+
+            $('html, body').animate({
+                scrollTop: scrollTop
+            }, 1500);
+
+            setTimeout(function () {
+                start_scroll = false;
+            }, 1500);
+        }
+    });
+    // scroll to section ===============================
+
 
     function faqListAppendToColumn() {
         for (let i = 0, j = 0; i < faq_question.length; i++, j++) {
@@ -112,13 +160,8 @@ $(function () {
 
     faqListAppendToColumn();
 
-    /* function faqElemLoadMore(e) {
-        e.preventDefault();
-    }
-
-    faqElemLoadMore($(faq_loadMore)); */
-
     let faqElemSlideCheck = false;
+
     function faqElemSlideUp(e) {
         if (faqElemSlideCheck == false) {
             faqElemSlideCheck = true;
@@ -140,7 +183,7 @@ $(function () {
     }
 
     $('.input-placeholder').on('click', function () {
-        if (!$(this).hasClass('.focus')) {
+        if (!$(this).next().hasClass('.focus') && $(this).next().val() == '') {
             $(this).next().focus();
         }
     });
@@ -221,9 +264,32 @@ $(function () {
         formElem: $('.form_input'),
     });
 
+    /* $('.header__menu--contact').on('click', function() {
+        $('.body').css('padding-right', widthScrollBar + 'px');
+    });
+    $('.mfp-container').on('click', function() {
+        $('.body').css('padding-right', 0 + 'px');
+    }) */
 
 
+    $('.header__menu--contact').magnificPopup({
+		type: 'inline',
+        preloader: false,
+        overflowY: 'auto',
+        fixedBgPos: true,
 
+		// When elemened is focused, some mobile browsers in some cases zoom in
+		// It looks not nice, so we disable it:
+		/* callbacks: {
+			beforeOpen: function() {
+				if($(window).width() < 700) {
+					this.st.focus = false;
+				} else {
+					this.st.focus = '#name';
+				}
+			}
+		} */
+	});
 
     AOS.init();
 
