@@ -2821,9 +2821,9 @@ img.mfp-img {
 }
 
 .header__top.hide {
-  -webkit-transform: translateY(-100%) !important;
-      -ms-transform: translateY(-100%) !important;
-          transform: translateY(-100%) !important;
+  -webkit-transform: translateY(-101%) !important;
+      -ms-transform: translateY(-101%) !important;
+          transform: translateY(-101%) !important;
 }
 
 .header-logo {
