@@ -35,7 +35,6 @@ $(function () {
         ]
     });
 
-
     ThisIsWebP().then(function () {
         $.each($(image_src_bg), function () {
             return false;
@@ -52,17 +51,12 @@ $(function () {
         });
     });
 
-
-
-    let hMenu = $('.header__menu'),
-        logo = $('.header-logo'),
-        scrollName, scrollElem, scrollTop,
+    let scrollName, scrollElem, scrollTop,
         start_scroll = false,
-        widthScrollBar, widthScreen,
+        widthScrollBar,
         burger = $('.menu__burger'),
         mBtn = $('.menu__btn-scroll'),
         faq_hidenElem = $('.faq__list--li-hiden'),
-        faq_hidenElemLength = $('.faq__list--li-hiden').length,
         faq_question = $('.faq__list--question'),
         faq_answear = $('.faq__list--answear'),
         faq_li,
@@ -264,12 +258,9 @@ $(function () {
         formElem: $('.form_input'),
     });
 
-
-
     $('.header__menu--contact').magnificPopup({
 		type: 'inline',
         preloader: false,
-        overflowY: 'auto',
 	});
 
     AOS.init();

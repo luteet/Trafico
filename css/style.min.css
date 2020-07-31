@@ -173,7 +173,7 @@ button {
   -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
           transform: translateY(-50%);
-  background: url(/img/btn-arrow.svg) center/contain no-repeat;
+  background: url(../img/btn-arrow.svg) center/contain no-repeat;
 }
 
 .faq-question {
@@ -402,11 +402,11 @@ button {
 }
 
 .contacts-phone {
-  background-image: url(/img/icons/phone.svg);
+  background-image: url(../img/icons/phone.svg);
 }
 
 .contacts-e-mail {
-  background-image: url(/img/icons/email.svg);
+  background-image: url(../img/icons/email.svg);
 }
 
 @-webkit-keyframes menu-circle {
