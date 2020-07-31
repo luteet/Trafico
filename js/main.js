@@ -85,13 +85,14 @@ $(function () {
         elemName: $('.header__top'),
         classCheck: 'hide',
         distanceHide: 500,
-        distanceShow: 300
+        distanceShow: 200
     })
 
 
     $(burger).on('click', function () {
         $(this).toggleClass('active');
         $(mList).toggleClass('active');
+        $(hMenu).toggleClass('active');
         $('.body').toggleClass('scroll_none');
     });
 
