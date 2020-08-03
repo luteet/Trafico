@@ -98,8 +98,7 @@ $(function () {
 
 
     $(burger).on('click', function () {
-        $(this).toggleClass('active');
-        $(mList).toggleClass('active');
+        $('.menu__burger, .header__menu--list').toggleClass('active');
         $('body').toggleClass('scroll_none');
     });
 
@@ -137,7 +136,7 @@ $(function () {
     });
     // scroll to section ===============================
 
-
+    // <append questions in column>
     function faqListAppendToColumn() {
         for (let i = 0, j = 0; i < faq_question.length; i++, j++) {
             if (j == 2) {
@@ -151,30 +150,32 @@ $(function () {
         }
         $('.faq__list-li--learn-more').appendTo($(faq_column[1]));
     }
-
     faqListAppendToColumn();
+    // </append questions in column>
 
+    // <questions slide function>
     let faqElemSlideCheck = false;
-
     function faqElemSlideUp(e) {
         if (faqElemSlideCheck == false) {
             faqElemSlideCheck = true;
             if ($(e).hasClass('active')) {
                 $(e).removeClass('active');
-                $(faq_answear).slideUp(500).removeClass('active');
+                $(faq_answear).slideUp(700).removeClass('active');
             }
             else {
                 $(faq_question).removeClass('active');
                 $(e).addClass('active');
-                $(faq_answear).slideUp(500).removeClass('active');
+                $(faq_answear).slideUp(700).removeClass('active');
                 faq_answear = $(e).next();
-                $(faq_answear).slideDown(500).addClass('active');
+                $(faq_answear).slideDown(700).addClass('active');
             }
             setTimeout(function () {
                 faqElemSlideCheck = false;
             }, 500);
         }
     }
+
+    // </questions slide function>
 
     $('.input-placeholder').on('click', function () {
         if (!$(this).next().hasClass('.focus') && $(this).next().val() == '') {
@@ -263,6 +264,8 @@ $(function () {
         preloader: false,
 	});
 
-    AOS.init();
+    AOS.init({
+        disable: "mobile"
+    });
 
 });
