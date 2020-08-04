@@ -29,7 +29,8 @@ $(function () {
             {
                 breakpoint: 769,
                 settings: {
-                    slidesToShow: 1
+                    slidesToShow: 1,
+                    infinite: false
                 }
             }
         ]
@@ -73,22 +74,6 @@ $(function () {
 
     widthScrollBarFunc();
 
-    function screenSize() {
-        if ($(window).width() <= 951) {
-
-        }
-        else if ($(window).width() > 951) {
-            if ($(burger).hasClass('active')) {
-                $(burger).click();
-            }
-        }
-    }
-    screenSize();
-
-    $(window).resize(function () {
-        screenSize()
-    });
-
     headerHider({
         elemName: $('.header__top'),
         classCheck: 'hide',
@@ -102,6 +87,36 @@ $(function () {
         $('body').toggleClass('scroll_none');
     });
 
+    let inputScreenMediaCheck = true,
+        headerMenuCheck = true;
+    function screenSize() {
+        if ($(window).width() <= 951) {
+            if(inputScreenMediaCheck == true) {
+                inputScreenMediaCheck = false;
+            }
+            if(headerMenuCheck == true) {
+                $('.header__top').appendTo('.wrapper');
+                headerMenuCheck = false;
+            }
+        }
+        else if ($(window).width() > 951) {
+            if(inputScreenMediaCheck == false) {
+                inputScreenMediaCheck = true;
+            }
+            if ($(burger).hasClass('active')) {
+                $(burger).click();
+            }
+            if(headerMenuCheck == false) {
+                $('.header__top').appendTo('.body');
+                headerMenuCheck = true;
+            }
+        }
+    }
+    screenSize();
+
+    $(window).resize(function () {
+        screenSize()
+    });
 
     // scroll to section ===============================
     $(mBtn).on('click', function (e) {
@@ -110,10 +125,10 @@ $(function () {
             start_scroll = true;
 
             scrollName = $(this).attr('href'),
-            scrollElem = $(scrollName),
-            scrollTop = scrollElem.offset().top;
+                scrollElem = $(scrollName),
+                scrollTop = scrollElem.offset().top;
 
-            if($(window).width() <= 950) {
+            if ($(window).width() <= 950) {
                 scrollTop = scrollTop - 70;
             }
 
@@ -136,7 +151,7 @@ $(function () {
     });
     // scroll to section ===============================
 
-    // <append questions in column>
+    // <append questions in column> ===============================
     function faqListAppendToColumn() {
         for (let i = 0, j = 0; i < faq_question.length; i++, j++) {
             if (j == 2) {
@@ -151,9 +166,9 @@ $(function () {
         $('.faq__list-li--learn-more').appendTo($(faq_column[1]));
     }
     faqListAppendToColumn();
-    // </append questions in column>
+    // </append questions in column> ===============================
 
-    // <questions slide function>
+    // <questions slide function> ===============================
     let faqElemSlideCheck = false;
     function faqElemSlideUp(e) {
         if (faqElemSlideCheck == false) {
@@ -174,8 +189,7 @@ $(function () {
             }, 500);
         }
     }
-
-    // </questions slide function>
+    // </questions slide function> ===============================
 
     $('.input-placeholder').on('click', function () {
         if (!$(this).next().hasClass('.focus') && $(this).next().val() == '') {
@@ -197,7 +211,7 @@ $(function () {
         if (settings.formElem == undefined) {
             return false;
         }
-        
+
         let form_input = settings.formElem,
             inputChek = true,
             focusClass = settings.focusClass,
@@ -205,10 +219,9 @@ $(function () {
             inputLast = $(form_input[inputLength]).data('input-id'),
             inputId;
 
-
-            if (settings.focusClass == undefined) {
-                focusClass = 'focus';
-            }
+        if (settings.focusClass == undefined) {
+            focusClass = 'focus';
+        }
 
         function nextInput(e) {
             if (e.data('input-id') != inputLast && inputChek == true) {
@@ -235,24 +248,37 @@ $(function () {
         }
 
         $(form_input).focus(function () {
-            
-            $(this).parent().addClass(focusClass);
-            $(this).prev().addClass(focusClass);
-            $(this).on('keydown', function (e) {
-                if (e.which == 40) {
-                    nextInput($(this));
-                }
-                if (e.which == 38) {
-                    prevInput($(this));
-                }
-            });
-        })
-        .blur(function () {
-            if ($(this).val() == '') {
-                $(this).prev().removeClass(focusClass);
+            if (inputScreenMediaCheck == true) {
+                $(this).parent().addClass(focusClass);
+                $(this).prev().addClass(focusClass);
+                $(this).on('keydown', function (e) {
+                    if (e.which == 40) {
+                        nextInput($(this));
+                    }
+                    if (e.which == 38) {
+                        prevInput($(this));
+                    }
+                });
             }
-            $(this).parent().removeClass(focusClass);
-        });
+            else {
+                $(this).prev().removeClass(focusClass);
+                $(this).parent().addClass(focusClass);
+                $(this).prev().fadeOut(0);
+            }
+        })
+            .blur(function () {
+                if ($(this).val() == '') {
+                    if (inputScreenMediaCheck == true) {
+                        $(this).prev().removeClass(focusClass);
+                    }
+                    else {
+                        $(this).prev().fadeIn(0);
+                    }
+                }
+                $(this).parent().removeClass(focusClass);
+
+            });
+
     }
 
     formKeySwitch({
@@ -260,9 +286,10 @@ $(function () {
     });
 
     $('.header__menu--contact').magnificPopup({
-		type: 'inline',
+        type: 'inline',
         preloader: false,
-	});
+    });
+    
 
     AOS.init({
         disable: "mobile"
