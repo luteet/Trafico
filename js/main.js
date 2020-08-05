@@ -1,5 +1,10 @@
 $(function () {
 
+    let heightSvg = $('.start-svg').width() / 1.7,
+        heightForHeader = (heightSvg - $(window).height()) + $(window).height();
+    
+    $('.header').css('height', heightForHeader + 'px');
+
     let image_srcNotWebp,
         image_src_bg = '.webp-bg';
 
@@ -77,19 +82,24 @@ $(function () {
     headerHider({
         elemName: $('.header__top'),
         classCheck: 'hide',
-        distanceHide: 400,
+        distanceHide: 300,
         distanceShow: 100
     })
 
 
     $(burger).on('click', function () {
-        $('.menu__burger, .header__menu--list').toggleClass('active');
-        $('body').toggleClass('scroll_none');
+        if(!$('.header__top').hasClass('hide')) {
+            $('.menu__burger, .header__menu--list').toggleClass('active');
+            $('body').toggleClass('scroll_none');
+        }        
     });
 
     let inputScreenMediaCheck = true,
         headerMenuCheck = true;
     function screenSize() {
+        if ($(window).width() <= 320) {
+            $(mList).css('height', $(window).height() + 'px');
+        }
         if ($(window).width() <= 951) {
             if(inputScreenMediaCheck == true) {
                 inputScreenMediaCheck = false;
@@ -100,6 +110,9 @@ $(function () {
             }
         }
         else if ($(window).width() > 951) {
+            heightSvg = $('.start-svg').width() / 1.55 - 100,
+            heightForHeader = (heightSvg - $(window).height()) + $(window).height();
+            $('.header').css('height', heightForHeader + 'px');
             if(inputScreenMediaCheck == false) {
                 inputScreenMediaCheck = true;
             }
@@ -115,7 +128,7 @@ $(function () {
     screenSize();
 
     $(window).resize(function () {
-        screenSize()
+        screenSize()        
     });
 
     // scroll to section ===============================
@@ -248,17 +261,19 @@ $(function () {
         }
 
         $(form_input).focus(function () {
+            $(this).on('keydown', function (e) {
+                if($('html').hasClass('desktop')) {
+                if (e.which == 40) {
+                    nextInput($(this));
+                }
+                if (e.which == 38) {
+                    prevInput($(this));
+                }
+            }
+            });
             if (inputScreenMediaCheck == true) {
                 $(this).parent().addClass(focusClass);
-                $(this).prev().addClass(focusClass);
-                $(this).on('keydown', function (e) {
-                    if (e.which == 40) {
-                        nextInput($(this));
-                    }
-                    if (e.which == 38) {
-                        prevInput($(this));
-                    }
-                });
+                $(this).prev().addClass(focusClass); 
             }
             else {
                 $(this).prev().removeClass(focusClass);
