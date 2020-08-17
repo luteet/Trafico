@@ -106,7 +106,7 @@ $(function () {
             }
             if(headerMenuCheck == true) {
                 $('.header__top').appendTo('.header-append');
-                $(mList).css('height', 'auto');
+                $(mList).css('height', '100vh');
                 headerMenuCheck = false;
             }
         }
